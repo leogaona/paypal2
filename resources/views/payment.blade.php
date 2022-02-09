@@ -16,30 +16,35 @@
 
         // Sets up the transaction when a payment button is clicked
         createOrder: function(data, actions) {
+          ///cliente 
           return actions.order.create({
             //desabilita el shipping
+            
             application_context: {
                 shipping_preference: "NO_SHIPPING"
             },
-
             payer:{
               email_address: 'sb-ofelx12920165@personal.example.com',
               name:{
                 given_name:'John',
-                surname: 'Doe'
+                surname: 'Doe',
+                city:'los angeles'
               },
+              //phone:{
+                //phone_number: '342324324432'
+              //},
               address:{
                 address_line_1: "los laureles",
                 address_line_2: "test",
                 admin_area_1: "",
-                admin_area_2: "",
+                admin_area_2: "los angeles",
                 postal_code: "10101",
                 country_code: "US",
               }
             },
             purchase_units: [{
               amount: {
-                value: '77.44' //PRECIO: Can reference variables or functions. Example: `value: document.getElementById('...').value` 
+                value: '50.00' //PRECIO: Can reference variables or functions. Example: `value: document.getElementById('...').value` 
               }
             }]
           });
@@ -49,21 +54,21 @@
         onApprove: function(data, actions) {
 
           console.log('data', data);
-          console.log('actions', actions);
+          //console.log('actions', actions);
 
-
+            /*
             return actions.order.capture().then(function(details){    
                 alert('transaction completed by' + details.payer.name.given_name);
             });
-        
 
-            /*
-                return fetch('/paypal/process/' + data.orderID, {
-                    method: 'post'
-                })
+            return fetch('/paypal/process/' + data.orderID + '?solution_id=777' + $solution->id )
+            */
+
+            
                 
+                return fetch('/paypal/process/' + data.orderID)
                 .then(res => res.json())
-                .then(function(orderData) {
+                .then(function(orderData) { // orderData
                     // Three cases to handle:
                     //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
                     //   (2) Other non-recoverable errors -> Show a failure message
@@ -71,6 +76,21 @@
 
                     // This example reads a v2/checkout/orders capture response, propagated from the server
                     // You could use a different API or structure for your 'orderData'
+                    
+                    
+                      /*
+                      if(!response.success){
+                        const msg = 'mensaje de error !';
+                        return alert(msg);
+                      }
+                      
+                      ///MENSAJE EXITOSO
+                      alert('compra exitosa!');
+                      //location.href = '';
+                      */
+
+
+                    
                     var errorDetail = Array.isArray(orderData.details) && orderData.details[0];
 
                     if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
@@ -86,9 +106,12 @@
                     }
 
                     // Successful capture! For demo purposes:
+                    
                     console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                     var transaction = orderData.purchase_units[0].payments.captures[0];
                     alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                    
+                    
 
                     // Replace the above to show a success message within this page, e.g.
                     // const element = document.getElementById('paypal-button-container');
@@ -96,7 +119,7 @@
                     // element.innerHTML = '<h3>Thank you for your payment!</h3>';
                     // Or go to another URL:  actions.redirect('thank_you.html');
                 });
-            */
+            
         
 
 

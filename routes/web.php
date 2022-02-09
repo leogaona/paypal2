@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PayPalCardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,8 @@ Route::get('/payment', function(){
 
 //Route::get('/paypal/process/{orderId}', 'PayPalCardController@process')->name('paypal.process');
 
-Route::get('/paypal/process/{orderId}', 'PayPalCardController@process')->name('paypal.process');
+//Route::post('/paypal/process/{orderId}', 'PayPalCardController@process')->name('paypal.process');
+Route::get('/paypal/process/{orderId}', [PayPalCardController::class, 'process'])->name('paypal.process');
+ 
 
 

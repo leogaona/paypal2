@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
 
-class PaymentsPayPalCardController extends Controller
+class PayPalCardController extends Controller
 {
 
     private $client;
@@ -44,7 +44,7 @@ class PaymentsPayPalCardController extends Controller
     }
 
 
-    public function process($orderId){
+    public function process($orderId, Request $request ){
         /*
         $client = new Client([
             'base_uri' => 'https://api-m.sandbox.paypal.com'
@@ -86,5 +86,44 @@ class PaymentsPayPalCardController extends Controller
 
         //return json_decode($response->getBody());
         return (string) ($response->getBody());
+        //$data = json_decode($response->getBody(), true);
+        
+        /// PAGO EXITOSO
+        //if ($data['status'] === 'APPROVED'){
+            
+            
+            //$userId = Solution::where('id', $solution_id)->value('user_id');
+            
+            //$solution_id = $request->input('solution_id');
+            //$solution = Solution::findOrFail($solution_id);
+            //$amount = $data['purchase_units'][0]['amount']['value'];
+
+
+            
+
+            //guardar datos
+            //$this->registerSuccessfulPayment();
+
+           /*
+            return [
+                'success' => $this->registerSuccessfulPayment($userId, $amount, $orderId),
+                'url' => $solution->getResultsLink()
+            ];
+            */
+        //}
+
+        // ERROR en la compra
+        //return [
+          //  'success' => false
+        //];
     }
+
+    /*
+    public function registerSuccessfulPayment($solution, $amount, $orderId): bool
+    {
+         
+    }
+    */
+
+
 }
